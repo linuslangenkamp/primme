@@ -10,7 +10,7 @@ INCLUDE := -I../include
 FINCLUDE := -I../include
 LIBS := ../lib/libprimme.a $(LIBS)
 
-EXAMPLES_C = ex_eigs_dseq ex_eigs_zseq ex_eigs_zseq_normal ex_svds_dseq ex_svds_zseq
+EXAMPLES_C = ex_eigs_dseq ex_eigs_zseq ex_eigs_zseq_normal ex_svds_dseq ex_svds_zseq my_example
 EXAMPLES_CXX = ex_eigs_zseqxx ex_svds_zseqxx
 EXAMPLES_F = ex_eigs_dseqf77 ex_eigs_zseqf77 ex_svds_dseqf77 ex_svds_zseqf77 ex_eigs_dseqf90 ex_svds_dseqf90
 
@@ -23,7 +23,7 @@ ifeq ($(USE_PETSC), yes)
   FINCLUDE += $(PETSC_FCPPFLAGS)
   LIBDIRS += $(PETSC_C_SH_LIB_PATH)
   LIBS += $(PETSC_LIB)
-  EXAMPLES_C += ex_eigs_petsc ex_svds_petsc ex_eigs_mpi
+  EXAMPLES_C += ex_eigs_petsc ex_svds_petsc ex_eigs_mpi my_example
   EXAMPLES_F += ex_eigs_petscf77 ex_eigs_petscf77ptr ex_svds_petscf77 ex_svds_petscf77ptr
   MPIRUN ?= mpirun -np 4
 else ifeq ($(USE_MPI),yes)
@@ -129,6 +129,9 @@ ex_eigs_petscf77ptr.F: ex_f77.m4
 
 ex_svds_dseq.c: exsvd_c.m4
 	$(M4) exsvd_c.m4 > $@
+
+my_example.c:
+	$(M4) my_example.m4 > $@
 
 ex_svds_zseq.c: exsvd_c.m4
 	$(M4) -D USE_COMPLEX -D ADVANCED_HYBRID exsvd_c.m4 > $@
