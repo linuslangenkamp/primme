@@ -91,8 +91,8 @@ install(
   DESTINATION "${PRIMME_INSTALL_CMAKEDIR}"
 )
 
-add_executable(my_example examples/my_example.c)
-
-target_include_directories(my_example PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
-target_link_libraries(my_example PRIVATE primme)
+if(BUILD_MY_EXAMPLE)
+    add_executable(my_example examples/my_example.c)
+    target_include_directories(my_example PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+    target_link_libraries(my_example PRIVATE primme)
+endif()
