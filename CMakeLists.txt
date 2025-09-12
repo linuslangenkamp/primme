@@ -90,3 +90,9 @@ install(
     "${PROJECT_BINARY_DIR}/primme-config-version.cmake"
   DESTINATION "${PRIMME_INSTALL_CMAKEDIR}"
 )
+
+add_executable(my_example examples/my_example.c)
+
+target_include_directories(my_example PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+target_link_libraries(my_example PRIVATE primme)
