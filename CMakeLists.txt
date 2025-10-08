@@ -47,7 +47,7 @@ if (NOT TARGET LAPACK::LAPACK)
 endif()
 primme_test_fortran_underscore()
 
-CHECK_LIBRARY_EXISTS(m sin "" HAVE_LIB_M)                                                                                    
+CHECK_LIBRARY_EXISTS(m sin "" HAVE_LIB_M)
 if (HAVE_LIB_M)
   set(EXTRA_LIBS ${EXTRA_LIBS} m) 
 endif()
@@ -68,7 +68,6 @@ add_subdirectory(include)
 add_subdirectory(src)
 
 enable_testing()
-add_subdirectory(examples)
 
 install(TARGETS primme
   EXPORT primmeTargets

@@ -136,7 +136,7 @@ static primme_result_t* sparse_svd(void* handle, primme_target_t target) {
     primme_internal_info_t *info = (primme_internal_info_t *)handle;
 
     /* some default values for now */
-    double eps = 1e-14;
+    double eps = 1e-12;
 
     /* Set problem matrix */
     info->primme_svds.matrix = NULL; /* user_data */
@@ -167,8 +167,8 @@ static void LinearOperator(void *x, PRIMME_INT *ldx, void *y, PRIMME_INT *ldy, i
                          int *transpose, primme_svds_params *primme_svds, int *err);
 
 int main (int argc, char *argv[]) {
-    void *handle = sparse_svd_allocate(20000, 20000, 10, LinearOperator);
-    primme_result_t* res = sparse_svd(handle, LEAST);
+    void *handle = sparse_svd_allocate(10000, 10000, 10, LinearOperator);
+    primme_result_t* res = sparse_svd(handle, TOP);
     //print_svd_results(res);
     sparse_svd_free(handle);
 }

@@ -46,7 +46,6 @@ set(SOURCES
    eigs/main_iter.c
    eigs/ortho.c
    eigs/primme_c.c
-   eigs/primme_f77.c
    eigs/primme_interface.c
    eigs/restart.c
    eigs/solve_projection.c
@@ -58,7 +57,6 @@ set(SOURCES
    linalg/memman.c
    linalg/wtime.c
    svds/primme_svds_c.c
-   svds/primme_svds_f77.c
    svds/primme_svds_interface.c
 )
 target_sources(primme PRIVATE ${SOURCES})
