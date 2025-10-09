@@ -28,11 +28,6 @@ endif ()
 # Find our extra modules
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 include(PrimmeTests)
-include(CMakePackageConfigHelpers)
-include(GNUInstallDirs)
-
-set(PRIMME_INSTALL_INCLUDEDIR "${CMAKE_INSTALL_INCLUDEDIR}/primme")
-set(PRIMME_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/primme")
 
 if (WITH_HALF)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DPRIMME_WITH_HALF")
@@ -52,13 +47,12 @@ if (HAVE_LIB_M)
   set(EXTRA_LIBS ${EXTRA_LIBS} m) 
 endif()
 
-add_library(primme)
+add_library(primme STATIC)
 set(primme_MAJOR_VERSION 3)
 set(primme_MINOR_VERSION 9)
 set(primme_VERSION ${primme_MAJOR_VERSION}.${primme_MINOR_VERSION})
 target_include_directories(primme
   PUBLIC
-    $<INSTALL_INTERFACE:${PRIMME_INSTALL_INCLUDEDIR}>
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/include>
 )
@@ -66,29 +60,6 @@ target_link_libraries(primme PUBLIC LAPACK::LAPACK BLAS::BLAS ${EXTRA_LIBS})
 
 add_subdirectory(include)
 add_subdirectory(src)
-
-enable_testing()
-
-install(TARGETS primme
-  EXPORT primmeTargets
-  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
-
-configure_file(cmake/primme-config.cmake.in "${PROJECT_BINARY_DIR}/primme-config.cmake" @ONLY)
-write_basic_package_version_file(
-  ${PROJECT_BINARY_DIR}/primme-config-version.cmake
-  VERSION ${PACKAGE_VERSION}
-  COMPATIBILITY SameMajorVersion
-  )
-install(EXPORT primmeTargets DESTINATION "${PRIMME_INSTALL_CMAKEDIR}")
-install(
-  FILES
-    "${PROJECT_BINARY_DIR}/primme-config.cmake"
-    "${PROJECT_BINARY_DIR}/primme-config-version.cmake"
-  DESTINATION "${PRIMME_INSTALL_CMAKEDIR}"
-)
 
 if(BUILD_MY_EXAMPLE)
     add_executable(my_example examples/my_example.c)

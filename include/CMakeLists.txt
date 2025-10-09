@@ -9,5 +9,3 @@ set(HEADERS
   primme_svds_f90.inc
   primme_svds.h
 )
-
-install(FILES ${HEADERS} DESTINATION ${PRIMME_INSTALL_INCLUDEDIR})
