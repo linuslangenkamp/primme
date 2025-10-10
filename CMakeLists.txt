@@ -26,19 +26,24 @@ primme_test_fortran_underscore()
 
 CHECK_LIBRARY_EXISTS(m sin "" HAVE_LIB_M)
 if (HAVE_LIB_M)
-  set(EXTRA_LIBS ${EXTRA_LIBS} m) 
+  set(EXTRA_LIBS ${EXTRA_LIBS} m)
 endif()
 
 add_library(primme STATIC)
+target_compile_options(primme PRIVATE -fPIC)
+
 target_include_directories(primme
   PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/include>
 )
+
 target_link_libraries(primme PUBLIC LAPACK::LAPACK BLAS::BLAS ${EXTRA_LIBS})
 
 add_subdirectory(include)
 add_subdirectory(src)
+
+install(TARGETS primme)
 
 if(BUILD_MY_EXAMPLE)
     add_executable(my_example examples/my_example.c)
